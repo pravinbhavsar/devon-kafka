@@ -2,6 +2,13 @@ package com.capgemini.kafka.message;
 
 import java.io.Serializable;
 
+/**
+ *
+ * Kafka Message with generic template Value is payload and can be any object key is message Id, please map to
+ * co-relation id / message id if its JMS message Message is with header, toString needs to be overridden to send
+ * details about messgae Message can include headers, especially for JMS, Angular messages etc.
+ *
+ */
 public class KafkaMessage<T> implements Serializable {
 
   private int messageId;
