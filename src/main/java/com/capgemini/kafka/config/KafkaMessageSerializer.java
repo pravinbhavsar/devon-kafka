@@ -6,6 +6,11 @@ import java.io.ObjectOutputStream;
 import java.util.Map;
 
 /**
+ *
+ * class is used to serialize the object at Producer end. Currently entire object is serielized, class can be modified
+ * based on requirement based on message format, separate key and value serializer can be used. This is configured as an
+ * input in application.properties file.
+ * 
  * @author pravbhav
  *
  */

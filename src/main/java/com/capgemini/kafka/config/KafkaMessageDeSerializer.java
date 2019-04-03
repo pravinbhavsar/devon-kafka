@@ -6,6 +6,9 @@ import com.capgemini.kafka.message.KafkaMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
+ * class is used to de serialize the object at consumer end. Currently entire object is deserielized, class can be
+ * modified based on requirement based on message format, separate key and value deserializer can be used.
+ * 
  * @author pravbhav
  *
  */

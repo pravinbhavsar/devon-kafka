@@ -7,6 +7,12 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
+/**
+ * class reads consumer properties from application.properties as part of POC In actual project Implementation move
+ * these to separate location Basic minimum set of properties are considered for POC Current configuration supports
+ * plaintext protocol and not SSL * @author pravbhav
+ *
+ */
 @Configuration
 public class KafkaConsumerProperties implements EnvironmentAware {
 
@@ -52,6 +58,10 @@ public class KafkaConsumerProperties implements EnvironmentAware {
     this.valuedeserializer = valuedeserializer;
   }
 
+  /*
+   * Return the instance of Properties class for Consumer object to be created
+   *
+   */
   public Properties getProperties() {
 
     Properties prop = new Properties();

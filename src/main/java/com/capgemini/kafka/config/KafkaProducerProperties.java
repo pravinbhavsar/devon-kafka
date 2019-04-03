@@ -9,6 +9,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 
+/**
+ * class reads producer properties from application.properties as part of POC In actual project Implementation move
+ * these to separate location Basic minimum set of properties are considered for POC Current configuration supports
+ * plaintext protocol and not SSL
+ *
+ * @author pravbhav
+ *
+ */
 @Configuration
 public class KafkaProducerProperties implements EnvironmentAware {
 
@@ -116,6 +124,10 @@ public class KafkaProducerProperties implements EnvironmentAware {
 
   }
 
+  /*
+   * Return properties object for producer to be created.
+   *
+   */
   public Properties getProperties() {
 
     Properties prop = new Properties();
