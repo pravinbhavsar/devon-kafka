@@ -11,6 +11,8 @@ import com.capgemini.kafka.consumer.KafkaMessageConsumer;
 import com.capgemini.kafka.message.KafkaMessage;
 
 /**
+ * Logic class consumes messages sent to topic Consumes message received in string and object format.
+ * 
  * @author pravbhav
  *
  */

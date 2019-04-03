@@ -10,6 +10,8 @@ import com.capgemini.kafka.producer.KafkaMessageProducer;
 import com.capgemini.kafka.producer.KafkaRecordMetaData;
 
 /**
+ * Used by Service class to send messages to kafka topic Messages can be sent in sync and aysnc format
+ *
  * @author pravbhav
  *
  */
