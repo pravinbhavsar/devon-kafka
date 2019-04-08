@@ -16,6 +16,9 @@ import com.capgemini.kafka.message.KafkaMessage;
 import com.capgemini.kafka.service.KafkaConsumerService;
 
 /**
+ *
+ * Class is sample consumer service which consumes kafka topic
+ * 
  * @author pravbhav
  *
  */
@@ -25,6 +28,13 @@ import com.capgemini.kafka.service.KafkaConsumerService;
 public class KafkaConsumerServiceImpl implements KafkaConsumerService {
 
   private static final Logger logger = LoggerFactory.getLogger(KafkaConsumerServiceImpl.class);
+
+  /**
+   *
+   * @param topic
+   * @return
+   * @throws KafkaException
+   */
 
   @RequestMapping(value = "/kafka/consume/{topic}", produces = { "application/json" }, consumes = {
   "application/json" }, method = RequestMethod.POST)
@@ -48,6 +58,13 @@ public class KafkaConsumerServiceImpl implements KafkaConsumerService {
     }
     return msgList;
   }
+
+  /**
+   *
+   * @param topic
+   * @return
+   * @throws KafkaException
+   */
 
   @RequestMapping(value = "/kafka/consumeobject/{topic}", produces = { "application/json" }, consumes = {
   "application/json" }, method = RequestMethod.POST)

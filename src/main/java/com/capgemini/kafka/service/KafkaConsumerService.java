@@ -23,10 +23,22 @@ public interface KafkaConsumerService {
 
   public static final Logger logger = LoggerFactory.getLogger(KafkaConsumerService.class);
 
+  /**
+   *
+   * @param topic
+   * @return
+   * @throws KafkaException
+   */
   @RequestMapping(value = "/kafka/consume/{topic}", produces = { "application/json" }, consumes = {
   "application/json" }, method = RequestMethod.POST)
   public List<KafkaMessage> consume(@PathVariable String topic) throws KafkaException;
 
+  /**
+   *
+   * @param topic
+   * @return
+   * @throws KafkaException
+   */
   @RequestMapping(value = "/kafka/consumeobject/{topic}", produces = { "application/json" }, consumes = {
   "application/json" }, method = RequestMethod.POST)
   public List<KafkaMessage> consumeObjectMessage(@PathVariable String topic) throws KafkaException;

@@ -19,9 +19,13 @@ public class KafkaProducerLogic {
 
   private static final Logger logger = LoggerFactory.getLogger(KafkaProducerLogic.class);
 
-  /*
-   * send a message as string
+  /**
+   *
+   * @param topic
+   * @param msg
+   * @return
    */
+
   public KafkaRecordMetaData sendMessage(String topic, String msg) {
 
     logger.debug("Kafka SendMessage Called" + msg);
@@ -40,9 +44,15 @@ public class KafkaProducerLogic {
     return kmetadata;
   }
 
-  /*
-   * send a message as string
+  /**
+   * send message to kafka topic
+   * 
+   * @param topic
+   * @param key
+   * @param msg
+   * @return
    */
+
   public KafkaRecordMetaData sendMessage(String topic, String key, String msg) {
 
     logger.debug("Kafka SendMessage Called" + msg);
@@ -55,9 +65,16 @@ public class KafkaProducerLogic {
     return kmetadata;
   }
 
-  /*
-   * send a message as string
+  /**
+   * Send message to topic and partition
+   * 
+   * @param topic
+   * @param partition
+   * @param key
+   * @param msg
+   * @return
    */
+
   public KafkaRecordMetaData sendMessage(String topic, int partition, String key, String msg) {
 
     logger.debug("Kafka SendMessage Called" + msg);
@@ -70,6 +87,17 @@ public class KafkaProducerLogic {
     return kmetadata;
 
   }
+
+  /**
+   * send message to kafka topic to specified partition, with timestamp, key and message
+   *
+   * @param topic
+   * @param partition
+   * @param timestamp
+   * @param key
+   * @param msg
+   * @return KafkaRecordMetaData
+   */
 
   public KafkaRecordMetaData sendMessage(String topic, Integer partition, Long timestamp, String key, String msg) {
 
@@ -84,10 +112,12 @@ public class KafkaProducerLogic {
 
   }
 
-  /*
-   * send a message as Message Object
+  /**
+   * send a message as KafkaMessage Object
+   *
+   * @param msg
+   * @return KafkaRecordMetaData
    */
-
   public KafkaRecordMetaData sendMessage(KafkaMessage msg) {
 
     logger.debug("Kafka SendMessage Called" + msg);
@@ -99,10 +129,11 @@ public class KafkaProducerLogic {
 
   }
 
-  /*
+  /**
    * send a message as Message Object in Async manner
+   *
+   * @param msg
    */
-
   public void sendAsyncMessage(KafkaMessage msg) {
 
     logger.debug("Kafka SendMessage Called" + msg);

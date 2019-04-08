@@ -15,6 +15,8 @@ import com.capgemini.kafka.producer.KafkaRecordMetaData;
 import com.capgemini.kafka.service.KafkaProducerService;
 
 /**
+ * CLASS implements ProducerService Used as proxy to Kafka, exposes Rest service which interfaces to kafka
+ *
  * @author pravbhav
  *
  */
@@ -24,10 +26,12 @@ import com.capgemini.kafka.service.KafkaProducerService;
 public class KafkaProducerServiceImpl implements KafkaProducerService {
 
   /**
+   * method sends message to kafka topic
+   * 
    * @param topic
    * @param key
    * @param msg
-   * @return
+   * @return KafkaRecordMetaData
    * @throws KafkaException
    */
   @Override
@@ -47,10 +51,12 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
   }
 
   /**
+   * Method sends message to kafka topic
+   * 
    * @param topic
    * @param key
    * @param msg
-   * @return
+   * @return KafkaRecord Metadata
    * @throws KafkaException
    */
 
