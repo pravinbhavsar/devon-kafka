@@ -23,6 +23,13 @@ import com.capgemini.kafka.service.KafkaProducerService;
 
 public class KafkaProducerServiceImpl implements KafkaProducerService {
 
+  /**
+   * @param topic
+   * @param key
+   * @param msg
+   * @return
+   * @throws KafkaException
+   */
   @Override
   @RequestMapping(value = "/kafka/{topic}/message", produces = { "application/json" }, consumes = {
   "application/json" }, method = RequestMethod.POST)
@@ -38,6 +45,14 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
     KafkaProducerLogic logic = new KafkaProducerLogic();
     return logic.sendMessage(topic, msg.getValue());
   }
+
+  /**
+   * @param topic
+   * @param key
+   * @param msg
+   * @return
+   * @throws KafkaException
+   */
 
   @Override
   @RequestMapping(value = "/kafka/{topic}/key/{key}", produces = { "application/json" }, consumes = {
@@ -59,6 +74,11 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
     return logic.sendMessage(topic, key, msg.getValue());
   }
 
+  /**
+   * @param msg
+   * @return
+   * @throws KafkaException
+   */
   @Override
   @RequestMapping(value = "/kafka/message", produces = { "application/json" }, consumes = {
   "application/json" }, method = RequestMethod.POST)
@@ -82,7 +102,22 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
     return logic.sendMessage(topic, partition, timestamp, key, value);
   }
 
-  public KafkaRecordMetaData sendMessage(String topic, int partition, String key, String msg) throws KafkaException {
+  /**
+   *
+   * @param topic
+   * @param partition
+   * @param key
+   * @param msg
+   * @return
+   * @throws KafkaException
+   */
+
+  @Override
+  @RequestMapping(value = "/kafka/{topic}/{partition}/{key}", produces = { "application/json" }, consumes = {
+  "application/json" }, method = RequestMethod.POST)
+
+  public KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable int partition,
+      @PathVariable String key, @RequestBody String msg) throws KafkaException {
 
     logger.debug("Inside KafkaProducerServiceImpl sendMessage 3");
     if (Kafkautil.isNullOrEmpty(topic)) {
@@ -96,8 +131,22 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 
   }
 
-  public KafkaRecordMetaData sendMessage(String topic, Integer partition, Long timestamp, String key, String msg)
-      throws KafkaException {
+  /**
+   *
+   * @param topic
+   * @param partition
+   * @param timestamp
+   * @param key
+   * @param msg
+   * @return
+   * @throws KafkaException
+   */
+  @Override
+  @RequestMapping(value = "/kafka/{topic}/{partition}/{timestamp}/{key}", produces = {
+  "application/json" }, consumes = { "application/json" }, method = RequestMethod.POST)
+
+  public KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable Integer partition,
+      @PathVariable Long timestamp, @PathVariable String key, @RequestBody String msg) throws KafkaException {
 
     logger.debug("Inside KafkaProducerServiceImpl sendMessage 4");
     if (Kafkautil.isNullOrEmpty(topic)) {
@@ -111,7 +160,16 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 
   }
 
-  public KafkaRecordMetaData sendMessage(KafkaMessage msg) throws KafkaException {
+  /**
+   *
+   * @param msg
+   * @return
+   * @throws KafkaException
+   */
+  @Override
+  @RequestMapping(value = "/kafka/kafkamessage", produces = { "application/json" }, consumes = {
+  "application/json" }, method = RequestMethod.POST)
+  public KafkaRecordMetaData sendMessage(@RequestBody KafkaMessage msg) throws KafkaException {
 
     logger.debug("Inside KafkaProducerServiceImpl sendMessage 5");
     String topic = msg.getTopic();
@@ -124,7 +182,16 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
     return logic.sendMessage(msg);
   }
 
-  public void sendAyncMessage(KafkaMessage msg) throws KafkaException {
+  /**
+   *
+   * @param msg
+   * @throws KafkaException
+   */
+
+  @Override
+  @RequestMapping(value = "/kafka/asyncmessage", produces = { "application/json" }, consumes = {
+  "application/json" }, method = RequestMethod.POST)
+  public void sendAyncMessage(@RequestBody KafkaMessage msg) throws KafkaException {
 
     logger.debug("Inside KafkaProducerServiceImpl sendMessage 6");
     String topic = msg.getTopic();

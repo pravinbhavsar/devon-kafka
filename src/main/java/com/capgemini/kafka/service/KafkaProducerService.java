@@ -45,7 +45,8 @@ public interface KafkaProducerService {
 
   @RequestMapping(value = "/kafka/{topic}/key/{key}", produces = { "application/json" }, consumes = {
   "application/json" }, method = RequestMethod.POST)
-  KafkaRecordMetaData sendMessage(String topic, String key, Message msg) throws KafkaException;
+  KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable String key, @RequestBody Message msg)
+      throws KafkaException;
 
   /**
    * @param msg
@@ -55,15 +56,59 @@ public interface KafkaProducerService {
 
   @RequestMapping(value = "/kafka/message", produces = { "application/json" }, consumes = {
   "application/json" }, method = RequestMethod.POST)
-  KafkaRecordMetaData sendMessage(Message msg) throws KafkaException;
+  KafkaRecordMetaData sendMessage(@RequestBody Message msg) throws KafkaException;
 
-  public void sendAyncMessage(KafkaMessage msg) throws KafkaException;
+  /**
+   *
+   * @param msg
+   * @throws KafkaException
+   */
 
-  public KafkaRecordMetaData sendMessage(KafkaMessage msg) throws KafkaException;
+  @RequestMapping(value = "/kafka/asyncmessage", produces = { "application/json" }, consumes = {
+  "application/json" }, method = RequestMethod.POST)
+  public void sendAyncMessage(@RequestBody KafkaMessage msg) throws KafkaException;
 
-  public KafkaRecordMetaData sendMessage(String topic, int partition, String key, String msg) throws KafkaException;
+  /**
+   *
+   * @param msg
+   * @return
+   * @throws KafkaException
+   */
 
-  public KafkaRecordMetaData sendMessage(String topic, Integer partition, Long timestamp, String key, String msg)
-      throws KafkaException;
+  @RequestMapping(value = "/kafka/kafkamessage", produces = { "application/json" }, consumes = {
+  "application/json" }, method = RequestMethod.POST)
+  public KafkaRecordMetaData sendMessage(@RequestBody KafkaMessage msg) throws KafkaException;
+
+  /**
+   *
+   * @param topic
+   * @param partition
+   * @param key
+   * @param msg
+   * @return
+   * @throws KafkaException
+   */
+
+  @RequestMapping(value = "/kafka/{topic}/{partition}/{key}", produces = { "application/json" }, consumes = {
+  "application/json" }, method = RequestMethod.POST)
+
+  public KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable int partition,
+      @PathVariable String key, @RequestBody String msg) throws KafkaException;
+
+  /**
+   *
+   * @param topic
+   * @param partition
+   * @param timestamp
+   * @param key
+   * @param msg
+   * @return
+   * @throws KafkaException
+   */
+  @RequestMapping(value = "/kafka/{topic}/{partition}/{timestamp}/{key}", produces = {
+  "application/json" }, consumes = { "application/json" }, method = RequestMethod.POST)
+
+  public KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable Integer partition,
+      @PathVariable Long timestamp, @PathVariable String key, @RequestBody String msg) throws KafkaException;
 
 }
