@@ -36,7 +36,7 @@ public class KafkaConsumerLogicTest {
   @Rule
   public MockitoRule rule = MockitoJUnit.rule();
 
-  private List<ConsumerRecord<String, String>> recordMetadata;
+  private List<ConsumerRecord<byte[], byte[]>> recordMetadata;
 
   @Mock
   KafkaMessageConsumer consumer;

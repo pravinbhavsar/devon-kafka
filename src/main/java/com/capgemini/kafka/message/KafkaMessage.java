@@ -11,17 +11,51 @@ import java.io.Serializable;
  */
 public class KafkaMessage implements Serializable {
 
-  private int messageId;
+  private String messageId;
 
   private String key;
 
-  private String  payload;
+  private String payload;
 
-  private int partition;
+  private String partition;
 
   private String topic;
 
-  private long timestamp;
+  private String timestamp;
+
+  private String offset;
+
+  /**
+   * @return offset
+   */
+  public String getOffset() {
+
+    return this.offset;
+  }
+
+  /**
+   * @param offset new value of {@link #getoffset}.
+   */
+  public void setOffset(String offset) {
+
+    this.offset = offset;
+  }
+
+  /**
+   * @return messageId
+   */
+  public String getMessageId() {
+
+    return this.messageId;
+  }
+
+  /**
+   * @param messageId new value of {@link #getmessageId}.
+   */
+  public void setMessageId(String messageId) {
+
+    this.messageId = messageId;
+  }
 
   /**
    * @return key
@@ -39,45 +73,26 @@ public class KafkaMessage implements Serializable {
     this.key = key;
   }
 
-
   /**
-   * @return timestamp
+   * @return payload
    */
-  public long getTimestamp() {
+  public String getPayload() {
 
-    return this.timestamp;
+    return this.payload;
   }
 
   /**
-   * @param timestamp new value of {@link #gettimestamp}.
+   * @param payload new value of {@link #getpayload}.
    */
-  public void setTimestamp(long timestamp) {
+  public void setPayload(String payload) {
 
-    this.timestamp = timestamp;
+    this.payload = payload;
   }
-
-  /**
-   * @return offset
-   */
-  public long getOffset() {
-
-    return this.offset;
-  }
-
-  /**
-   * @param offset new value of {@link #getoffset}.
-   */
-  public void setOffset(long offset) {
-
-    this.offset = offset;
-  }
-
-  private long offset;
 
   /**
    * @return partition
    */
-  public int getPartition() {
+  public String getPartition() {
 
     return this.partition;
   }
@@ -85,7 +100,7 @@ public class KafkaMessage implements Serializable {
   /**
    * @param partition new value of {@link #getpartition}.
    */
-  public void setPartition(int partition) {
+  public void setPartition(String partition) {
 
     this.partition = partition;
   }
@@ -107,44 +122,27 @@ public class KafkaMessage implements Serializable {
   }
 
   /**
-   * @return messageId
+   * @return timestamp
    */
-  public int getMessageId() {
+  public String getTimestamp() {
 
-    return this.messageId;
+    return this.timestamp;
   }
 
   /**
-   * @param messageId new value of {@link #getmessageId}.
+   * @param timestamp new value of {@link #gettimestamp}.
    */
-  public void setMessageId(int messageId) {
+  public void setTimestamp(String timestamp) {
 
-    this.messageId = messageId;
+    this.timestamp = timestamp;
   }
 
-  /**
-   * @return payload
-   */
-  public String getPayload() {
+  @Override
+  public String toString() {
 
-    return this.payload;
+    return "KafkaMessage [messageId=" + this.messageId + ", key=" + this.key + ", payload=" + this.payload
+        + ", partition=" + this.partition + ", topic=" + this.topic + ", timestamp=" + this.timestamp + ", offset="
+        + this.offset + "]";
   }
-
-  /**
-   * @param payload new value of {@link #getpayload}.
-   */
-  public void setPayload(String payload) {
-
-    this.payload = payload;
-  }
-
-@Override
-public String toString() {
-	return "KafkaMessage [messageId=" + messageId + ", payload=" + payload + ", partition=" + partition + ", topic="
-			+ topic + ", timestamp=" + timestamp + ", key=" + key + ", offset=" + offset + "]";
-}
-
-
-  
 
 }

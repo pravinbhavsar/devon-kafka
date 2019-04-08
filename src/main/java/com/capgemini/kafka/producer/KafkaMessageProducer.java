@@ -34,8 +34,6 @@ public class KafkaMessageProducer {
 
   KafkaProducer<String, KafkaMessage> objProducer;
 
-  private String topic = "test";
-
   /*
    * create producer object to send String message
    *
@@ -87,7 +85,7 @@ public class KafkaMessageProducer {
     RecordMetadata metadata = null;
     try {
 
-      metadata = producer.send(new ProducerRecord<String, String>(this.topic, message)).get();
+      metadata = producer.send(new ProducerRecord<String, String>(topic, message)).get();
 
     } catch (Exception ex) {
       logger.error("Exception ex" + ex.getMessage());
@@ -115,7 +113,7 @@ public class KafkaMessageProducer {
     RecordMetadata metadata = null;
     try {
 
-      metadata = producer.send(new ProducerRecord<String, String>(this.topic, key, message)).get();
+      metadata = producer.send(new ProducerRecord<String, String>(topic, key, message)).get();
 
     } catch (Exception ex) {
       logger.error("Exception ex" + ex.getMessage());
@@ -143,7 +141,7 @@ public class KafkaMessageProducer {
     RecordMetadata metadata = null;
     try {
 
-      metadata = producer.send(new ProducerRecord<String, String>(this.topic, partition, keyStr, message)).get();
+      metadata = producer.send(new ProducerRecord<String, String>(topic, partition, keyStr, message)).get();
 
     } catch (Exception ex) {
       logger.error("Exception ex" + ex.getMessage());
@@ -164,8 +162,7 @@ public class KafkaMessageProducer {
     RecordMetadata metadata = null;
     try {
 
-      metadata =
-          producer.send(new ProducerRecord<String, String>(this.topic, partition, timestamp, key, message)).get();
+      metadata = producer.send(new ProducerRecord<String, String>(topic, partition, timestamp, key, message)).get();
 
     } catch (Exception ex) {
       logger.error("Exception ex" + ex.getMessage());
@@ -197,10 +194,11 @@ public class KafkaMessageProducer {
     logger.debug("Inside KafkaProducer  send");
     logger.debug("Kafka Messgae" + message.getMessageId() + message.getPayload());
     RecordMetadata recdata = null;
+    String topic = message.getTopic();
     final Producer<String, KafkaMessage> producer = createObjProducer();
     try {
 
-      recdata = (RecordMetadata) producer.send(new ProducerRecord(this.topic, message)).get();
+      recdata = (RecordMetadata) producer.send(new ProducerRecord(topic, message)).get();
     } catch (InterruptedException e) {
       logger.info("Error occured in InterruptedException is thrown ");
       e.printStackTrace();

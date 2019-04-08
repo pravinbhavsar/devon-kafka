@@ -92,7 +92,7 @@ public interface KafkaProducerService {
   @RequestMapping(value = "/kafka/{topic}/{partition}/{key}", produces = { "application/json" }, consumes = {
   "application/json" }, method = RequestMethod.POST)
 
-  public KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable int partition,
+  public KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable String partition,
       @PathVariable String key, @RequestBody String msg) throws KafkaException;
 
   /**
@@ -108,7 +108,7 @@ public interface KafkaProducerService {
   @RequestMapping(value = "/kafka/{topic}/{partition}/{timestamp}/{key}", produces = {
   "application/json" }, consumes = { "application/json" }, method = RequestMethod.POST)
 
-  public KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable Integer partition,
-      @PathVariable Long timestamp, @PathVariable String key, @RequestBody String msg) throws KafkaException;
+  public KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable String partition,
+      @PathVariable String timestamp, @PathVariable String key, @RequestBody String msg) throws KafkaException;
 
 }

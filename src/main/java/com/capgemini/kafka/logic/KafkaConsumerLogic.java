@@ -46,17 +46,12 @@ public class KafkaConsumerLogic {
       KafkaMessage message = new KafkaMessage();
       if (rec != null) {
         byte[] key = rec.key();
-        if (key != null) {
-          message.setKey(new String(key));
-
-        }
-        String value = new String(rec.value());
-        message.setPayload(value);
+        message.setKey(new String(key));
+        message.setPayload(new String(rec.value()));
         message.setTopic(rec.topic());
-        message.setOffset(rec.offset());
-        message.setPartition(rec.partition());
-        message.setTimestamp(rec.timestamp());
-        message.setPayload(value);
+        message.setPartition(Integer.toString(rec.partition()));
+        message.setTimestamp(Long.toString(rec.timestamp()));
+        message.setTimestamp(Long.toString(rec.offset()));
         custrec.add(message);
       }
     }
@@ -86,17 +81,12 @@ public class KafkaConsumerLogic {
       KafkaMessage message = new KafkaMessage();
       if (rec != null) {
         byte[] key = rec.key();
-        if (key != null) {
-          message.setKey(new String(key));
-
-        }
-        String value = new String(rec.value());
-        message.setPayload(value);
+        message.setKey(new String(key));
+        message.setPayload(new String(rec.value()));
         message.setTopic(rec.topic());
-        message.setOffset(rec.offset());
-        message.setPartition(rec.partition());
-        message.setTimestamp(rec.timestamp());
-        message.setPayload(value);
+        message.setPartition(Integer.toString(rec.partition()));
+        message.setTimestamp(Long.toString(rec.timestamp()));
+        message.setTimestamp(Long.toString(rec.offset()));
         custrec.add(message);
       }
     }

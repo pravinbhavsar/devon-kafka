@@ -46,7 +46,7 @@ public class KafkaProducerLogic {
 
   /**
    * send message to kafka topic
-   * 
+   *
    * @param topic
    * @param key
    * @param msg
@@ -67,7 +67,7 @@ public class KafkaProducerLogic {
 
   /**
    * Send message to topic and partition
-   * 
+   *
    * @param topic
    * @param partition
    * @param key
@@ -122,7 +122,9 @@ public class KafkaProducerLogic {
 
     logger.debug("Kafka SendMessage Called" + msg);
     KafkaMessageProducer producer = new KafkaMessageProducer();
+
     RecordMetadata metadata = producer.send(msg);
+
     KafkaConverter converter = new KafkaConverter();
     KafkaRecordMetaData kmetadata = converter.convertKafkaMetaData(metadata);
     return kmetadata;

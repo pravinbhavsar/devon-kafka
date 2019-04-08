@@ -27,7 +27,7 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 
   /**
    * method sends message to kafka topic
-   * 
+   *
    * @param topic
    * @param key
    * @param msg
@@ -52,7 +52,7 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 
   /**
    * Method sends message to kafka topic
-   * 
+   *
    * @param topic
    * @param key
    * @param msg
@@ -100,11 +100,11 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
     String key = msg.getKey();
     Integer partition = new Integer(msg.getPartition());
     String value = msg.getValue();
+    if (msg.getTimestamp() == 0) {
+      msg.setTimestamp(System.currentTimeMillis());
+    }
     Long timestamp = new Long(msg.getTimestamp());
     KafkaProducerLogic logic = new KafkaProducerLogic();
-    if ((partition >= 0) && (timestamp < 0)) {
-      return logic.sendMessage(topic, partition, key, value);
-    }
     return logic.sendMessage(topic, partition, timestamp, key, value);
   }
 
@@ -122,7 +122,7 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
   @RequestMapping(value = "/kafka/{topic}/{partition}/{key}", produces = { "application/json" }, consumes = {
   "application/json" }, method = RequestMethod.POST)
 
-  public KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable int partition,
+  public KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable String partition,
       @PathVariable String key, @RequestBody String msg) throws KafkaException {
 
     logger.debug("Inside KafkaProducerServiceImpl sendMessage 3");
@@ -131,9 +131,8 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
       throw new KafkaException("Bad Request: Topic is null or empty");
       // send Response Entity bad request here
     }
-    Integer partitionInt = new Integer(partition);
     KafkaProducerLogic logic = new KafkaProducerLogic();
-    return logic.sendMessage(topic, partition, key, msg);
+    return logic.sendMessage(topic, new Integer(partition), key, msg);
 
   }
 
@@ -151,8 +150,8 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
   @RequestMapping(value = "/kafka/{topic}/{partition}/{timestamp}/{key}", produces = {
   "application/json" }, consumes = { "application/json" }, method = RequestMethod.POST)
 
-  public KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable Integer partition,
-      @PathVariable Long timestamp, @PathVariable String key, @RequestBody String msg) throws KafkaException {
+  public KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable String partition,
+      @PathVariable String timestamp, @PathVariable String key, @RequestBody String msg) throws KafkaException {
 
     logger.debug("Inside KafkaProducerServiceImpl sendMessage 4");
     if (Kafkautil.isNullOrEmpty(topic)) {
@@ -160,9 +159,14 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
       throw new KafkaException("Bad Request: Topic is null or empty");
       // send Response Entity bad request here
     }
+    long tstamp = Long.parseLong(timestamp);
+
+    if (tstamp == 0) {
+      tstamp = System.currentTimeMillis();
+    }
 
     KafkaProducerLogic logic = new KafkaProducerLogic();
-    return logic.sendMessage(topic, partition, timestamp, key, msg);
+    return logic.sendMessage(topic, new Integer(partition), new Long(tstamp), key, msg);
 
   }
 
@@ -184,8 +188,16 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
       throw new KafkaException("Bad Request: Topic is null or empty");
       // send Response Entity bad request here
     }
+    // default partition is zero
+    int partition = Integer.parseInt(msg.getPartition());
+    long timestamp = Long.parseLong(msg.getTimestamp());
+    if (timestamp == 0) {
+      timestamp = System.currentTimeMillis();
+
+    }
+    String key = msg.getKey();
     KafkaProducerLogic logic = new KafkaProducerLogic();
-    return logic.sendMessage(msg);
+    return logic.sendMessage(topic, new Integer(partition), new Long(timestamp), key, msg.getPayload());
   }
 
   /**
