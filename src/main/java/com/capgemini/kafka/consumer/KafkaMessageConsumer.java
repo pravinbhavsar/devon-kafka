@@ -14,9 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.capgemini.kafka.config.KafkaConsumerProperties;
-import com.capgemini.kafka.message.KafkaMessage;
 
 /**
+ *
+ *
  * @author pravbhav
  *
  */
@@ -28,27 +29,29 @@ public class KafkaMessageConsumer {
 
   KafkaConsumerProperties conProperties = new KafkaConsumerProperties();
 
-  KafkaConsumer<String, String> strConsumer;
+  KafkaConsumer<byte[], byte[]> strConsumer;
 
-  KafkaConsumer<String, KafkaMessage> objConsumer;
+  KafkaConsumer<byte[], byte[]> objConsumer;
 
-  List<ConsumerRecord<String, String>> strBuffer = new ArrayList<ConsumerRecord<String, String>>();
+  List<ConsumerRecord<byte[], byte[]>> strBuffer = new ArrayList<ConsumerRecord<byte[], byte[]>>();
 
-  List<ConsumerRecord<String, KafkaMessage>> objBuffer = new ArrayList<ConsumerRecord<String, KafkaMessage>>();
+  List<ConsumerRecord<byte[], byte[]>> objBuffer = new ArrayList<ConsumerRecord<byte[], byte[]>>();
 
   /*
    * create producer object to send String message
    *
    *
    */
-  public KafkaConsumer<String, String> createConsumer() {
+  public KafkaConsumer<byte[], byte[]> createConsumer() {
+
+    logger.debug("Inside KafkaMessageConsumer - createConsumer ");
 
     if (this.strConsumer != null) {
       return this.strConsumer;
 
     } else {
       Properties p = this.conProperties.getProperties();
-      this.strConsumer = new KafkaConsumer<String, String>(p);
+      this.strConsumer = new KafkaConsumer<byte[], byte[]>(p);
       return this.strConsumer;
     }
   }
@@ -58,16 +61,18 @@ public class KafkaMessageConsumer {
    *
    */
 
-  public KafkaConsumer<String, KafkaMessage> createObjConsumer() {
+  public KafkaConsumer<byte[], byte[]> createObjConsumer() {
+
+    logger.debug("Inside KafkaMessageConsumer - createObjConsumer ");
 
     if (this.objConsumer != null) {
       return this.objConsumer;
 
     } else {
       Properties p = this.conProperties.getProperties();
-      p.setProperty("key.deserializer", "com.capgemini.kafka.config.KafkaMessageDeSerializer");
-      p.setProperty("value.deserializer", "com.capgemini.kafka.config.KafkaMessageDeSerializer");
-      this.objConsumer = new KafkaConsumer<String, KafkaMessage>(p);
+      p.setProperty("key.deserializer", "org.apache.kafka.common.serialization.ByteArrayDeserializer");
+      p.setProperty("value.deserializer", "org.apache.kafka.common.serialization.ByteArrayDeserializer");
+      this.objConsumer = new KafkaConsumer<byte[], byte[]>(p);
       return this.objConsumer;
     }
   }
@@ -78,18 +83,23 @@ public class KafkaMessageConsumer {
    * @param topicName
    */
 
-  public void subscribeTextConsumer(Consumer<String, String> consumer, String topicName) {
+  public void subscribeTextConsumer(Consumer<byte[], byte[]> consumer, String topicName) {
+
+    logger.debug("Inside KafkaMessageConsumer - subscribeTextConsumer ");
 
     consumer.subscribe(Arrays.asList(topicName));
   }
 
-  public void subscribeObjConsumer(Consumer<String, KafkaMessage> consumer, String topicName) {
+  public void subscribeObjConsumer(Consumer<byte[], byte[]> consumer, String topicName) {
+
+    logger.debug("Inside KafkaMessageConsumer - subscribeObjConsumer ");
 
     consumer.subscribe(Arrays.asList(topicName));
   }
 
   public void unSubscribe(Consumer consumer) {
 
+    logger.debug("Inside KafkaMessageConsumer - unSubscribe ");
     consumer.unsubscribe();
   }
 
@@ -97,15 +107,17 @@ public class KafkaMessageConsumer {
    * consume messages using poll method
    *
    */
-  public List<ConsumerRecord<String, String>> consumeTextMesage(String topicName) {
+  public List<ConsumerRecord<byte[], byte[]>> consumeTextMesage(String topicName) {
 
-    final Consumer<String, String> consumer = createConsumer();
+    logger.debug("Inside KafkaMessageConsumer - consumeTextMesage ");
+
+    final Consumer<byte[], byte[]> consumer = createConsumer();
     subscribeTextConsumer(consumer, topicName);
 
     final int giveUp = 100;
     int noRecordsCount = 0;
     while (true) {
-      final ConsumerRecords<String, String> consumerRecords = consumer.poll(1000);
+      final ConsumerRecords<byte[], byte[]> consumerRecords = consumer.poll(1000);
       if (consumerRecords.count() == 0) {
         noRecordsCount++;
         if (noRecordsCount > giveUp)
@@ -134,29 +146,26 @@ public class KafkaMessageConsumer {
    *
    */
 
-  public List<ConsumerRecord<String, KafkaMessage>> consumeObjectMessage(String topicName) {
+  public List<ConsumerRecord<byte[], byte[]>> consumeObjectMessage(String topicName) {
 
-    final Consumer<String, KafkaMessage> consumer = createObjConsumer();
+    logger.debug("Inside KafkaMessageConsumer - consumeObjectMessage ");
+
+    final Consumer<byte[], byte[]> consumer = createObjConsumer();
     subscribeObjConsumer(consumer, topicName);
 
-    final int giveUp = 100;
-    int noRecordsCount = 0;
-
     while (true) {
-      final ConsumerRecords<String, KafkaMessage> consumerRecords = consumer.poll(1000);
-      if (consumerRecords.count() == 0) {
-        noRecordsCount++;
-        if (noRecordsCount > giveUp)
-          break;
-        else
-          continue;
-      }
-      consumerRecords.forEach(record -> {
+      final ConsumerRecords<byte[], byte[]> consumerRecords = consumer.poll(1000);
 
+      if (consumerRecords == null || consumerRecords.isEmpty()) {
+        break;
+      }
+
+      consumerRecords.forEach(record -> {
         logger.debug("Key" + record.key());
         logger.debug("Value" + record.value());
         logger.debug("Partition" + record.partition());
         logger.debug("offset" + record.offset());
+
         this.objBuffer.add(record);
 
       });

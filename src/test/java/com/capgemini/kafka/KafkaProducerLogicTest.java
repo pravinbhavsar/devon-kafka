@@ -110,7 +110,7 @@ public class KafkaProducerLogicTest {
         .thenReturn("com.capgemini.kafka.config.KafkaMessageSerializer");
     Mockito.when(this.producer.sendTextMessage(Mockito.anyString(), Mockito.anyString()))
         .thenReturn(this.recordMetadata);
-    KafkaRecordMetaData result = this.kafkaProducerLogic.sendMessage("topic", value);
+    KafkaRecordMetaData result = this.kafkaProducerLogic.sendMessage("test", value);
 
   }
 
@@ -145,7 +145,7 @@ public class KafkaProducerLogicTest {
     Mockito.when(this.producer.sendTextMessage(Mockito.anyString(), Mockito.anyString()))
         .thenReturn(this.recordMetadata);
 
-    KafkaRecordMetaData result = this.kafkaProducerLogic.sendMessage("topic", value, "msg");
+    KafkaRecordMetaData result = this.kafkaProducerLogic.sendMessage("test", value, "msg");
   }
 
 }

@@ -60,6 +60,8 @@ public class KafkaMessageProducer {
 
   public KafkaProducer<String, KafkaMessage> createObjProducer() {
 
+    logger.debug("Inside KafkaProducer  createObjProducer");
+
     if (this.objProducer != null) {
       return this.objProducer;
 
@@ -78,6 +80,8 @@ public class KafkaMessageProducer {
    * @arg1 - message string, this is synchronous message Message is sent without key and patition
    */
   public RecordMetadata sendTextMessage(String topic, String message) {
+
+    logger.debug("Inside KafkaProducer  sendTextMessage");
 
     final Producer<String, String> producer = createProducer();
     RecordMetadata metadata = null;
@@ -105,6 +109,8 @@ public class KafkaMessageProducer {
 
   public RecordMetadata sendTextMessage(String topic, String key, String message) {
 
+    logger.debug("Inside KafkaProducer  sendTextMessage2");
+
     final Producer<String, String> producer = createProducer();
     RecordMetadata metadata = null;
     try {
@@ -131,6 +137,8 @@ public class KafkaMessageProducer {
 
   public RecordMetadata sendTextMessage(String topic, Integer partition, String keyStr, String message) {
 
+    logger.debug("Inside KafkaProducer  sendTextMessage 3");
+
     final Producer<String, String> producer = createProducer();
     RecordMetadata metadata = null;
     try {
@@ -149,6 +157,8 @@ public class KafkaMessageProducer {
   }
 
   public RecordMetadata sendTextMessage(String topic, Integer partition, Long timestamp, String key, String message) {
+
+    logger.debug("Inside KafkaProducer  sendTextMessage 4");
 
     final Producer<String, String> producer = createProducer();
     RecordMetadata metadata = null;
@@ -184,6 +194,7 @@ public class KafkaMessageProducer {
 
   public RecordMetadata send(KafkaMessage message) {
 
+    logger.debug("Inside KafkaProducer  send");
     logger.debug("Kafka Messgae" + message.getMessageId() + message.getPayload());
     RecordMetadata recdata = null;
     final Producer<String, KafkaMessage> producer = createObjProducer();
@@ -212,8 +223,15 @@ public class KafkaMessageProducer {
   @Async
   public void sendAsync(KafkaMessage message) {
 
+    logger.debug("Inside KafkaProducer  sendAsync");
+
     final Producer<String, KafkaMessage> producer = createObjProducer();
     String topic = message.getTopic();
+
+    if (topic == null || topic.isEmpty()) {
+      logger.error("sendAsync : Topic should not be null or empty");
+    }
+
     ListenableFuture<SendResult<String, KafkaMessage>> future =
         (ListenableFuture<SendResult<String, KafkaMessage>>) producer.send(new ProducerRecord(topic, message));
     future.addCallback(new ListenableFutureCallback<SendResult<String, KafkaMessage>>() {

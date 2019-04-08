@@ -5,6 +5,8 @@ import java.io.Serializable;
  *  Simple message class if you  dont need headers and complex object classes as messages
  *  if you are ok with key and value both as string
  *
+ *  There is no consumer written for this message.
+ *
  */
 
 public class Message implements Serializable {

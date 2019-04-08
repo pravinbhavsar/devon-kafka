@@ -21,7 +21,7 @@ import org.springframework.core.env.Environment;
 public class KafkaProducerProperties implements EnvironmentAware {
 
   static Environment environment;
-
+  
   @Override
   public void setEnvironment(Environment environment) {
 
@@ -47,7 +47,6 @@ public class KafkaProducerProperties implements EnvironmentAware {
    */
   public String getClientId() {
 
-    System.out.println(environment.getProperty("kafka.producer.client.id"));
     return environment.getProperty("kafka.producer.client.id");
   }
 
@@ -56,7 +55,6 @@ public class KafkaProducerProperties implements EnvironmentAware {
    */
   public String getBootstrapservers() {
 
-    System.out.println(environment.getProperty("kafka.producer.bootstrap.servers"));
     // kafka.producer.bootstrap.servers
     return environment.getProperty("kafka.producer.bootstrap.servers");
 

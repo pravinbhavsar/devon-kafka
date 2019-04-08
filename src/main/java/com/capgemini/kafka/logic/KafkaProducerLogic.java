@@ -88,11 +88,14 @@ public class KafkaProducerLogic {
    * send a message as Message Object
    */
 
-  public void sendMessage(KafkaMessage msg) {
+  public KafkaRecordMetaData sendMessage(KafkaMessage msg) {
 
     logger.debug("Kafka SendMessage Called" + msg);
     KafkaMessageProducer producer = new KafkaMessageProducer();
-    producer.send(msg);
+    RecordMetadata metadata = producer.send(msg);
+    KafkaConverter converter = new KafkaConverter();
+    KafkaRecordMetaData kmetadata = converter.convertKafkaMetaData(metadata);
+    return kmetadata;
 
   }
 

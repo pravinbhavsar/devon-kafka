@@ -8,22 +8,33 @@ one sample endpoint
 
   http://localhost:9080/kafka/test/message 
 
- # here test is topic name created on kafka. 
+  In above Rest call, test is the topic name which is passed as parameter. 
 
   JSON from postmane 
 
-  {
-	"Key" : "1001" ,
-	"value" : "Example of Pting Pting Pting" , 
+
+   {
+	"key" : "1004", 
+	"messageId" : "1001",
+	"payload" : "Msg1" , 
 	"topic" : "test" ,
-	"timestamp" : -1,
+	"timestamp" : "10010001",
 	"offset" : 100000,
 	"partition" : 0
-  } 
+ } 
 
-  topic and value is required, all other parameteres can be used based on which method you are using
 
-  ## docker-compose.xml and Dockerfile for kafka and zookeeper images will be added to test resources folder and can be copied form there. 
-  ### In case you are within capgemini network and able to access 10.76.3.49, you can connect to kafka on 9092 port.   
+ Message can be received with postman or unit test 
 
- NOTE :  I am using plaintext API, my spring boot app is configured to run on 9080 port. 
+
+ http://localhost:9080/kafka/consumeobject/test
+  
+
+ Topic and payload is required, all other parameteres can be used based on which method you are using
+
+  
+  ## Preparation of Docker Instance 
+
+ 	1.  Docker-compose.xml and Dockerfile for kafka and zookeeper images will be added to test resources folder and can be copied form there. 
+ 	2.  In case you are within capgemini network and able to access 10.76.3.49, you can connect to kafka on 9092 port.   
+ 	NOTE : I am using plaintext API, my spring boot app is configured to run on 9080 port. 

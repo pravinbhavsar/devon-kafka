@@ -9,11 +9,13 @@ import java.io.Serializable;
  * details about messgae Message can include headers, especially for JMS, Angular messages etc.
  *
  */
-public class KafkaMessage<T> implements Serializable {
+public class KafkaMessage implements Serializable {
 
   private int messageId;
 
-  private T payload;
+  private String key;
+
+  private String  payload;
 
   private int partition;
 
@@ -37,7 +39,6 @@ public class KafkaMessage<T> implements Serializable {
     this.key = key;
   }
 
-  private String key;
 
   /**
    * @return timestamp
@@ -124,7 +125,7 @@ public class KafkaMessage<T> implements Serializable {
   /**
    * @return payload
    */
-  public T getPayload() {
+  public String getPayload() {
 
     return this.payload;
   }
@@ -132,15 +133,18 @@ public class KafkaMessage<T> implements Serializable {
   /**
    * @param payload new value of {@link #getpayload}.
    */
-  public void setPayload(T payload) {
+  public void setPayload(String payload) {
 
     this.payload = payload;
   }
 
-  @Override
-  public String toString() {
+@Override
+public String toString() {
+	return "KafkaMessage [messageId=" + messageId + ", payload=" + payload + ", partition=" + partition + ", topic="
+			+ topic + ", timestamp=" + timestamp + ", key=" + key + ", offset=" + offset + "]";
+}
 
-    return "KafkaMessage(" + " " + this.messageId + "  , " + this.payload.toString() + ")";
-  }
+
+  
 
 }
