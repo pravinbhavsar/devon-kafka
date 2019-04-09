@@ -1,5 +1,7 @@
 # devon-kafka
 
+Read swagger documentation at http://localhost:9080/swagger-ui.html 
+
 This POC expects you to have kafka instance running on default zookeeper and kafka ports 
 
 Please use  postman to send message to kafka service exposed as custom rest service 

@@ -6,11 +6,9 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @ComponentScan(basePackages = { "com.capgemini" })
 @ServletComponentScan(basePackages = { "com.capgemini" })
-@EnableWebMvc
 @EnableAutoConfiguration(exclude = { ErrorMvcAutoConfiguration.class, SecurityAutoConfiguration.class })
 public class SpringBootApp {
   /**
@@ -22,4 +20,5 @@ public class SpringBootApp {
 
     SpringApplication.run(SpringBootApp.class, args);
   }
+
 }

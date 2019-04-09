@@ -43,7 +43,7 @@ public interface KafkaProducerService {
    * @throws KafkaException
    */
 
-  @RequestMapping(value = "/kafka/{topic}/key/{key}", produces = { "application/json" }, consumes = {
+  @RequestMapping(value = "/kafka/{topic}/{key}", produces = { "application/json" }, consumes = {
   "application/json" }, method = RequestMethod.POST)
   KafkaRecordMetaData sendMessage(@PathVariable String topic, @PathVariable String key, @RequestBody Message msg)
       throws KafkaException;

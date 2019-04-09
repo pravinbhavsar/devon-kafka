@@ -108,6 +108,7 @@ public class KafkaMessageProducer {
   public RecordMetadata sendTextMessage(String topic, String key, String message) {
 
     logger.debug("Inside KafkaProducer  sendTextMessage2");
+    System.out.println("Inside KafkaProducer  sendTextMessage2");
 
     final Producer<String, String> producer = createProducer();
     RecordMetadata metadata = null;

@@ -1,5 +1,7 @@
 package com.capgemini.kafka.service.impl;
 
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,10 +63,10 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
    */
 
   @Override
-  @RequestMapping(value = "/kafka/{topic}/key/{key}", produces = { "application/json" }, consumes = {
+  @RequestMapping(value = "/kafka/{topic}/{key}", produces = { "application/json" }, consumes = {
   "application/json" }, method = RequestMethod.POST)
   public KafkaRecordMetaData sendMessage(@PathVariable("topic") String topic, @PathVariable("key") String key,
-      @RequestBody Message msg) throws KafkaException {
+      @Valid @RequestBody Message msg) throws KafkaException {
 
     logger.debug("Inside KafkaProducerServiceImpl sendMessage 2");
     if (Kafkautil.isNullOrEmpty(topic)) {
@@ -75,6 +77,10 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
     logger.debug("topic" + topic);
     logger.debug("key" + key);
     logger.debug("Message" + msg);
+
+    System.out.println("topic" + topic);
+    System.out.println("key" + key);
+    System.out.println("Message" + msg.toString());
 
     KafkaProducerLogic logic = new KafkaProducerLogic();
     return logic.sendMessage(topic, key, msg.getValue());
