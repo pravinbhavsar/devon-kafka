@@ -37,8 +37,8 @@ public class KafkaConsumerLogic {
 
     List<ConsumerRecord<byte[], byte[]>> list = msgConsumer.consumeTextMesage(topic);
     if ((list == null) || (list.isEmpty())) {
-
-      throw new KafkaException("Topic is null or empty");
+      logger.debug("No Records found returning empty list");
+      return new ArrayList<KafkaMessage>();
     }
     List<KafkaMessage> custrec = new ArrayList();
     for (int i = 0; i < list.size(); i++) {
@@ -54,6 +54,7 @@ public class KafkaConsumerLogic {
         message.setTimestamp(Long.toString(rec.offset()));
         custrec.add(message);
       }
+
     }
 
     return custrec;
